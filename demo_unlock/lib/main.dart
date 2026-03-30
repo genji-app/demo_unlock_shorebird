@@ -1,7 +1,7 @@
 import 'package:demo_unlock/core/restart_scope.dart';
 import 'package:demo_unlock/screens/betting_mode_screen.dart';
 import 'package:demo_unlock/screens/fake_mode_screen.dart';
-import 'package:demo_unlock/screens/splash_mode_screen.dart';
+import 'package:unlock_shorebird_kit/unlock_shorebird_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:terminate_restart/terminate_restart.dart';
 

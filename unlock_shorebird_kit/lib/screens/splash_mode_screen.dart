@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:demo_unlock/flow/unlock_flow_coordinator.dart';
-import 'package:demo_unlock/flow/unlock_shorebird_launch_coordinator.dart';
-import 'package:demo_unlock/shorebird/shorebird_patch_preferences.dart';
-import 'package:demo_unlock/shorebird/update/shorebird_restart_snackbar.dart';
+import 'package:unlock_shorebird_kit/flow/unlock_flow_coordinator.dart';
+import 'package:unlock_shorebird_kit/flow/unlock_shorebird_launch_coordinator.dart';
+import 'package:unlock_shorebird_kit/shorebird/shorebird_patch_preferences.dart';
+import 'package:unlock_shorebird_kit/shorebird/update/shorebird_restart_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:demo_unlock/models/unlock_command_response.dart';
-import 'package:demo_unlock/network/config_loader.dart';
-import 'package:demo_unlock/network/plain_body_dio_transformer.dart';
+import 'package:unlock_shorebird_kit/models/unlock_command_response.dart';
+import 'package:unlock_shorebird_kit/network/config_loader.dart';
+import 'package:unlock_shorebird_kit/network/plain_body_dio_transformer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

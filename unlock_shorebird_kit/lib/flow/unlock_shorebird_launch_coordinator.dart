@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:demo_unlock/flow/unlock_flow_coordinator.dart';
-import 'package:demo_unlock/shorebird/update/bloc/update_bloc.dart';
-import 'package:demo_unlock/shorebird/update/bloc/update_event.dart';
-import 'package:demo_unlock/shorebird/update/bloc/update_state.dart';
+import 'package:unlock_shorebird_kit/flow/unlock_flow_coordinator.dart';
+import 'package:unlock_shorebird_kit/shorebird/update/bloc/update_bloc.dart';
+import 'package:unlock_shorebird_kit/shorebird/update/bloc/update_event.dart';
+import 'package:unlock_shorebird_kit/shorebird/update/bloc/update_state.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 /// Runs [UnlockFlowCoordinator] and blocks entry to [AppMode.betting] until
@@ -89,7 +89,6 @@ final class UnlockShorebirdLaunchCoordinator {
                 state.status == UpdateFlowStatus.error,
           );
 
-      print('terminalState:=======> ${terminalState.status}');
       if (!isActive()) {
         return;
       }

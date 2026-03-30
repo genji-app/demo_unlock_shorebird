@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:demo_unlock/flow/unlock_flow_config.dart';
-import 'package:demo_unlock/models/unlock_command_response.dart';
-import 'package:demo_unlock/network/api_client.dart';
+import 'package:unlock_shorebird_kit/flow/unlock_flow_config.dart';
+import 'package:unlock_shorebird_kit/models/unlock_command_response.dart';
+import 'package:unlock_shorebird_kit/network/api_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,7 @@ class UnlockFlowCoordinator {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     debugPrint('Step 1 start: check local unlock key');
-    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? true;
+    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? false;
     if (isUnlocked) {
       debugPrint('Step 1 result: unlocked=true, open betting mode');
       onModeChanged(AppMode.betting);
