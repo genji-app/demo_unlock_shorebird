@@ -19,7 +19,7 @@ class UnlockFlowCoordinator {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     debugPrint('Step 1 start: check local unlock key');
-    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? true;
+    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? false;
     if (isUnlocked) {
       debugPrint('Step 1 result: unlocked=true, open betting mode');
       onModeChanged(AppMode.betting);
@@ -101,7 +101,7 @@ class UnlockFlowCoordinator {
   DateTime executeBuildUnlockDate(DateTime submitDate) {
     DateTime unlockDate = submitDate;
     int addedWorkDays = 0;
-    while (addedWorkDays < 3) {
+    while (addedWorkDays < 7) {
       unlockDate = unlockDate.add(const Duration(days: 1));
       if (unlockDate.weekday != DateTime.saturday &&
           unlockDate.weekday != DateTime.sunday) {
