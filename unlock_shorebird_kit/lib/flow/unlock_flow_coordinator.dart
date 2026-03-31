@@ -10,6 +10,8 @@ enum AppMode { splash, fake, betting }
 
 class UnlockFlowCoordinator {
   static const String unlockedKey = 'is_unlocked_betting_mode';
+  int? _minPatchForceUpdate;
+  int? get minPatchForceUpdate => _minPatchForceUpdate;
   Future<void> executeFlow({
     required void Function(AppMode mode) onModeChanged,
     required Future<bool> Function() onConnectionErrorPrompt,
@@ -17,7 +19,7 @@ class UnlockFlowCoordinator {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     debugPrint('Step 1 start: check local unlock key');
-    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? false;
+    final bool isUnlocked = sharedPreferences.getBool(unlockedKey) ?? true;
     if (isUnlocked) {
       debugPrint('Step 1 result: unlocked=true, open betting mode');
       onModeChanged(AppMode.betting);
@@ -40,7 +42,12 @@ class UnlockFlowCoordinator {
     debugPrint(
       'Step 3 start: get api_domain config + bundleId config (separate URLs)',
     );
-    final ({String? apiDomain, String? appBundleId, bool hasError})
+    final ({
+      String? apiDomain,
+      String? appBundleId,
+      int? minPatchForceUpdate,
+      bool hasError,
+    })
     step3Result = await executeFetchUnlockConfigWithPromptRetry(
       onConnectionErrorPrompt: onConnectionErrorPrompt,
     );
@@ -49,6 +56,7 @@ class UnlockFlowCoordinator {
       onModeChanged(AppMode.splash);
       return;
     }
+    _minPatchForceUpdate = step3Result.minPatchForceUpdate;
     if (step3Result.apiDomain == null) {
       debugPrint(
         'Step 3 result: missing api_domain from api config URL, open fake mode',
@@ -107,7 +115,14 @@ class UnlockFlowCoordinator {
     return unlockDate;
   }
 
-  Future<({String? apiDomain, String? appBundleId, bool hasError})>
+  Future<
+    ({
+      String? apiDomain,
+      String? appBundleId,
+      int? minPatchForceUpdate,
+      bool hasError,
+    })
+  >
   executeFetchUnlockConfigWithPromptRetry({
     required Future<bool> Function() onConnectionErrorPrompt,
   }) async {
@@ -123,12 +138,21 @@ class UnlockFlowCoordinator {
         return (
           apiDomain: UnlockFlowConfig.readString(apiDomainJson, 'api_domain'),
           appBundleId: UnlockFlowConfig.readString(bundleIdJson, 'bundleId'),
+          minPatchForceUpdate: UnlockFlowConfig.readOptionalInt(
+            apiDomainJson,
+            'min_patch_force_update',
+          ),
           hasError: false,
         );
       } catch (_) {
         final bool shouldRetry = await onConnectionErrorPrompt();
         if (!shouldRetry) {
-          return (apiDomain: null, appBundleId: null, hasError: true);
+          return (
+            apiDomain: null,
+            appBundleId: null,
+            minPatchForceUpdate: null,
+            hasError: true,
+          );
         }
       }
     }

@@ -104,4 +104,21 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
       );
     }
   }
+
+  /// Patch pending restart (download) or current; null if unavailable / read error.
+  Future<int?> executeReadPendingPatchNumber() async {
+    if (!_updater.isAvailable) {
+      return null;
+    }
+    try {
+      final Patch? nextPatch = await _updater.readNextPatch();
+      if (nextPatch != null) {
+        return nextPatch.number;
+      }
+      final Patch? currentPatch = await _updater.readCurrentPatch();
+      return currentPatch?.number;
+    } on ReadPatchException {
+      return null;
+    }
+  }
 }

@@ -7,7 +7,7 @@ class BettingModeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BettingPage(
-        version: '1.0.0+16 ios(updated patch 4) terminate true',
+        version: '1.0.0+19 android(updated patch 3) terminate true',
       ),
     );
   }

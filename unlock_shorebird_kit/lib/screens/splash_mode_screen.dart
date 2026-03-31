@@ -111,6 +111,18 @@ class _SplashModeScreenState extends State<SplashModeScreen> {
     if (!mounted) {
       return;
     }
+    final int? minPatchForceUpdate = _launchCoordinator.minPatchForceUpdate;
+    final int? pendingPatchNumber =
+        await _launchCoordinator.executeReadPendingPatchNumber();
+    if (!mounted) {
+      return;
+    }
+    if (minPatchForceUpdate != null && pendingPatchNumber != null) {
+      if (pendingPatchNumber >= minPatchForceUpdate) {
+        executeSetMode(AppMode.betting);
+        return;
+      }
+    }
     executeShowShorebirdRestartSnackbar(
       context,
       executeRestartWithFade: widget.executeRestartWithFade,

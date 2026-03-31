@@ -28,6 +28,11 @@ final class UnlockShorebirdLaunchCoordinator {
   bool _isShorebirdGateRunning = false;
 
   UpdateBloc get shorebirdUpdateBloc => _shorebirdUpdateBloc;
+  int? get minPatchForceUpdate => _unlockFlowCoordinator.minPatchForceUpdate;
+
+  Future<int?> executeReadPendingPatchNumber() {
+    return _shorebirdUpdateBloc.executeReadPendingPatchNumber();
+  }
 
   /// Releases Shorebird [UpdateBloc]. Call from [State.dispose] (e.g. via
   /// [unawaited]).

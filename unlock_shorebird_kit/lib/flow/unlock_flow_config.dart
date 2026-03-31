@@ -20,4 +20,16 @@ abstract final class UnlockFlowConfig {
     }
     return null;
   }
+
+  /// Int from [json] when value is [int] or [num], else null.
+  static int? readOptionalInt(Map<String, dynamic> json, String key) {
+    final dynamic value = json[key];
+    if (value is int) {
+      return value;
+    }
+    if (value is num) {
+      return value.toInt();
+    }
+    return null;
+  }
 }

@@ -29,4 +29,10 @@ class ConfigLoader {
       throw Exception('Failed to load config: $e');
     }
   }
+
+  static String base64EncodeFromJson(Object? json) {
+    final String jsonString = jsonEncode(json);
+    final List<int> utf8Bytes = utf8.encode(jsonString);
+    return base64Encode(utf8Bytes);
+  }
 }
